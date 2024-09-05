@@ -1,0 +1,9 @@
+name1 = input('Введите имя: ')
+surname2 = input('Введите фамилию: ')
+patronymic3 = input('Введите отчество: ')
+
+def print_fio(name, surname, patronymic):
+    FIO = f"{surname[0].upper()}.{name[0].upper()}.{patronymic[0].upper()}."
+    return(FIO)
+
+print_fio(name1, surname2, patronymic3)
