@@ -1,0 +1,35 @@
+name = str(input('введите своё имя: '))
+print(f'Здравствуйте {name}, давайте с вами {name} изучим англиский.')
+massiv1 = ['bear', 'boar', 'bird', 'tiger', 'mouse','lion']
+massiv2 = ['медведь', 'кабан', 'птица', 'тигр', 'мышь', 'лев']
+print(massiv1[0],massiv2[0],sep='-')
+print(massiv1[1],massiv2[1],sep='-')
+print(massiv1[2],massiv2[2],sep='-')
+print(massiv1[3],massiv2[3],sep='-')
+print(massiv1[4],massiv2[4],sep='-')
+print(massiv1[5],massiv2[5],sep='-')
+print('Вы запомнили слова?')
+ENTER = input('нажмите ENTER чтобы проверить ваши знания. ')
+for i in range(1 * 100 + 1):
+    print(i)
+
+    сounter_correct = 0
+counter_uncorrect = 0
+
+
+while True:
+    answer = str(input('введите как будет медведь по англиски? '))
+    if 'dog' != 'dog':
+        print('не правельно собака не так пишется у вас если что было 3 попытки вы одну использовали значет 2 попытки осталось')
+    else:
+        print('правельно молодцы! Пойдёмте дальше.')
+
+print(f'правельных ответов:{counter_correct}')
+print(f'не правельных ответов:{counter_uncorrect}')
+
+if counter_correct == 6:
+        print('вы хорошо запомнили слова!')
+elif 5 <= counter_correct <= 6:
+        print('вы средне запомнили слова!')
+else:
+        print('вы не хорошо запомнили слова')
