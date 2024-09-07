@@ -1,0 +1,46 @@
+import tkinter as tk
+from tkinter import ttk
+
+# Создаем главное окно
+root = tk.Tk()
+root.title("Таблица переводов")
+
+# Создаем Treeview для таблицы
+tree = ttk.Treeview(root, columns=("English", "Russian"), show="headings")
+tree.column("English", width=100)
+tree.column("Russian", width=100)
+tree.heading("English", text="Английский")
+tree.heading("Russian", text="Русский")
+tree.pack()
+
+# Добавляем данные в таблицу
+words = [('медведь', 'bear'), ('птица', 'bird'), ('кошка', 'cat')]
+for english, russian in words:
+    tree.insert("", "end", values=(english, russian))
+
+# Создаем метку для отображения таймера
+timer_label = tk.Label(root, text="Таймер: 30 секунд")
+timer_label.pack()
+
+# Функция, которая будет вызвана через 30 секунд после открытия окна
+def remove_table():
+    tree.pack_forget()  # Удаляем таблицу из интерфейса
+    timer_label.config(text="Таблица удалена")
+
+# Запланируем вызов функции remove_table через 30 секунд
+root.after(30000, remove_table)
+
+# Функция для обновления таймера
+def update_timer():
+    time_left = int(timer_label["text"].split()[-2]) - 1
+    if time_left > 0:
+        timer_label.config(text=f"Таймер: {time_left} секунд")
+        root.after(1000, update_timer)  # Обновляем таймер каждую секунду
+    else:
+        remove_table()
+
+# Запускаем функцию обновления таймера
+update_timer()
+
+# Запускаем главный цикл событий
+root.mainloop()
