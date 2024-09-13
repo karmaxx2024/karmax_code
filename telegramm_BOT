@@ -1,0 +1,37 @@
+from aiogram import Bot, Dispatcher
+from aiogram.filters import CommandStart, Command
+from aiogram.types import Message
+
+TOKEN = '7321121236:AAF9H9YrUuLMkznCEtq1LTFVVgdtvmSi2qA'
+
+bot = Bot(token=TOKEN)
+dp = Dispatcher()
+
+# Обработчик команды /start
+@dp.message(CommandStart())
+async def start_command(message: Message):
+    user_first_name = message.from_user.first_name
+    await message.answer(f"Добро пожаловать, {user_first_name}!")
+
+# Обработчик команды /help
+@dp.message(Command(commands=['help']))
+async def help_command(message: Message):
+    await message.answer("Используйте команды /start для начала и /info для получения информации.")
+
+# Обработчик команды /info
+@dp.message(Command(commands=['info']))
+async def info_command(message: Message):
+    await message.answer("Этот бот поможет вам поговорить с ним.")
+
+# Обработчик текстовых сообщений
+@dp.message(lambda message: message.text)
+async def reply_to_message(message: Message):
+    await message.answer("Привет, я бот, наберите help для большей информации ")
+
+# Обработчик старта бота
+async def main():
+    await dp.start_polling(bot)
+
+if __name__ == '__main__':
+    import asyncio
+    asyncio.run(main())
