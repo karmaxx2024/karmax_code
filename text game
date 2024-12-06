@@ -1,0 +1,386 @@
+
+import random
+quests = [
+    {
+        'id': 1,
+        'description': 'перс едет на коне и встречает злово ковбоя',
+        'attributes': {'сила': 2, 'ловкость': 1},
+        'events': [
+            {
+                'description': 'Злой ковбой подъезжает к персонажу. Что делать?',
+                'choices': {
+                    '1': {
+                        'description': 'Умереть',
+                        'outcome': 'Персонаж отключается и просыпается в больнице',
+                        'attributes': {'сила': -3},
+                    },
+                    '2': {
+                        'description': 'Стреляем в ковбоя',
+                        'outcome': 'В персонажа выстрелили в плечо, но он успел убить ковбоя',
+                        'attributes': {'здоровье': -20}
+                    },
+                    '3': {
+                        'description': 'Ковбой кричит',
+                        'outcome': 'Персонаж убил ковбоя и забрал его оружие',
+                        'inventory': ['улучшенное оружие ковбоя']
+                    }
+                },
+            }
+        ]
+    },
+    {
+        'id': 2,
+        'description': 'мы видим красивый и крутой меч мы выбираем как украсть',
+        'attributes': {'интелект': 2, 'ловкость': 2, 'сила': 1},
+        'events': [
+            {
+                'description': 'нас заметят. Что делать?',
+                'choices': {
+                    '1': {
+                        'description': 'нас спаймают',
+                        'outcome': 'Персонажа приводят в тюрьму',
+                        'attributes': {'сила': -1, 'здоровье': -25}
+                    },
+                    '2': {
+                        'description': 'украсть незаметно',
+                        'outcome': 'Персонаж успешно украл меч',
+                        'inventory': ['красивый меч']
+                    },
+                    '3': {
+                        'description': 'попросить разрешения',
+                        'outcome': 'Владелец меча дал разрешение взять меч',
+                        'inventory': ['красивый меч']
+                    }
+                }
+            }
+        ]
+    },
+    {
+        'id': 3,
+        'description': 'помочь жителю в городе',
+        'attributes': {'интелект': 1, 'общение': 3},
+        'events': [
+            {
+                'description': 'житель просит помочь с грузом. Что делать?',
+                'choices': {
+                    '1': {
+                        'description': 'отказаться',
+                        'outcome': 'Житель расстроен, но благодарит вас',
+                        'attributes': {'общение': -1}
+                    },
+                    '2': {
+                        'description': 'помочь',
+                        'outcome': 'Житель благодарит вас и дарит подарок',
+                        'inventory': ['подарок жителя']
+                    }
+                }
+            }
+        ]
+    },
+    {
+        'id': 4,
+        'description': 'житель попросил вас помочь ему в поиске дочери',
+        'attributes': {'интелект': 1, 'общение': 3, 'сила': 2},
+        'events': [
+            {
+                'description': 'найти следы дочери. Что делать?',
+                'choices': {
+                    '1': {
+                        'description': 'искать в лесу',
+                        'outcome': 'мы не нашли',
+                        'attributes': {'ловкость': -1, 'cила': -1}
+                    },
+                    '2': {
+                        'description': 'искать в городе',
+                        'outcome': 'Найдены следы, мы её нашли',
+                        'inventory': ['подарок мужчины ']
+                    }
+                }
+            }
+        ]
+    },
+    {
+        'id': 5,
+        'description': 'Старейшина города попросил сопроводить его в соседний поселок',
+        'attributes': {'интелект': 1, 'общение': 1, 'сила': 1},
+        'events': [
+            {
+                'description': 'на пути встречаются разбойники. Что делать?',
+                'choices': {
+                    '1': {
+
+                        'description': 'сражаться',
+                        'outcome': 'Разбойники побеждены, но Старейшина ранен в плечо',
+                        'attributes': {'ловкость': -1}
+                    },
+                    '2': {
+                        'description': 'убегать',
+                        'outcome': 'Успешно убежали, но получили ранение',
+                        'attributes': {'ловкость': -1, 'здоровье': -20}
+                    }
+                }
+            }
+        ]
+    },
+    {
+        'id': 6,
+        'description': 'Персонаж, прогуливаясь по окрестностям города нашел пещеру. Персонаж решил зайти внутрь',
+        'attributes': {'ловкость': 2, 'сила': 2},
+        'events': [
+            {
+                'description': 'в пещере темно. Что делать?',
+                'choices': {
+                    '1': {
+                        'description': 'искать источник света',
+                        'outcome': 'Найдена зажигалка',
+                        'inventory': ['зажигалка']
+                    },
+                    '2': {
+                        'description': 'идти наугад',
+                        'outcome': 'Персонаж спотыкается и падает',
+                        'attributes': {'здоровье': -5}
+                    }
+                }
+            }
+        ]
+    },
+    {
+        'id': 7,
+        'description': 'персонаж нашел рынок и там он продал оружие, которое ему не нужно',
+        'attributes': {'интелект': 1, 'общение': 1},
+        'events': [
+            {
+                'description': 'продать оружие. Что делать?',
+                'choices': {
+                    '1': {
+                        'description': 'продать за высокую цену',
+                        'outcome': 'Успешная продажа, получено много золота',
+                        'inventory': [' много золото']
+                    },
+                    '2': {
+                        'description': 'продать за низкую цену',
+                        'outcome': 'Продажа, но за низкую цену',
+                        'inventory': [' мало золота']
+                    }
+                }
+            }
+        ]
+    },
+    {
+        'id': 8,
+        'description': 'В поисках приключений, персонаж решил поработать наемником на местную армию',
+        'attributes': {'сила': 5, 'ловкость': 3},
+        'events': [
+            {
+                'description': 'получить задание. Что делать?',
+                'choices': {
+                    '1': {
+                        'description': 'взять сложное задание',
+                        'outcome': 'Успешное выполнение, получено много опыта',
+                        'attributes': {'сила': -2, 'ловкость': -1}
+                    },
+                    '2': {
+                        'description': 'взять простое задание',
+                        'outcome': 'Выполнено, но мало опыта',
+                        'attributes': {'сила': -1}
+                    }
+                }
+            }
+        ]
+    },
+    {
+        'id': 9,
+        'description': 'Персонаж учавствует в турнире по мечам',
+        'attributes': {'интелект': 1, 'сила': 2, 'ловкость': 1},
+        'events': [
+            {
+                'description': 'выбрать соперника. Что делать?',
+                'choices': {
+                    '1': {
+                        'description': 'выбрать сильного соперника',
+                        'outcome': 'Победа, но тяжело',
+                        'attributes': {'сила': -1}
+                    },
+                    '2': {
+                        'description': 'выбрать слабого соперника',
+                        'outcome': 'Легкая победа',
+                    }
+                }
+            }
+        ]
+    },
+    {
+        'id': 10,
+        'description': 'Персонаж едет на коне и подвозит женщину',
+        'attributes': {'общение': 2},
+        'events': [
+            {
+                'description': 'женщина просит помочь с грузом. Что делать?',
+                'choices': {
+                    '1': {
+                        'description': 'отказаться',
+                        'outcome': 'Женщина расстроена',
+                        'attributes': {'общение': -1}
+                    },
+                    '2': {
+                        'description': 'помочь',
+                        'outcome': 'Женщина благодарит вас и дарит подарок',
+                        'inventory': ['подарок женщины']
+                    }
+                }
+            }
+        ]
+    }
+]
+
+yes = 'да'
+no = 'нет'
+character = 'персонаж'
+
+
+['Inventory']
+characteristics = {
+    'сила': 1,
+    'ловкость': 1,
+    'интелект': 1,
+    'общение': 1,
+    'здоровье': 100
+}
+
+class Inventory:
+    def __init__(self):
+        self.items = []
+
+    def remove_item(self, item):
+        if item in self.items:
+            self.items.remove(item)
+            print(f'Удалено из инвентаря: {item}')
+        else:
+            print(f'Предмет "{item}" не найден в инвентаре.')
+
+    def add_item(self, item):
+        self.items.append(item)
+        print(f'Добавлено в инвентарь: {item}')
+
+    def show_inventory(self, items):
+        print('---Инвентарь персонажа---')
+        if self.items:
+            for item in self.items:
+                print(f'- {item}')
+        else:
+            print('у вас в инвенторе нечего нет.')
+        print()
+
+
+class Character:
+    def __init__(self, name, hair_color, skin_color, eye_color, height):
+        self.name = name
+        self.hair_color= hair_color
+        self.skin_color = skin_color
+        self.eye_color = eye_color
+        self.height = height
+        self.inventory = Inventory()
+        self.characteristics = {
+            'сила': 1,
+            'ловкость': 1,
+            'интелект': 1,
+            'общение': 1,
+            'здоровье': 100
+        }
+        self.level = 1
+        self.experience = 0
+        self.experience_to_next_level = 100
+
+
+def perform_quest():
+    quest = random.choice(quests)
+    print(f'Начался квест: {quest["description"]}')
+
+    # Обработка событий квеста
+    for event in quest['events']:
+        print(f'\nСобытие: {event["description"]}')
+        for key, choice in event['choices'].items():
+            print(f'{key}, {choice["description"]}')
+        while True:
+            user_choice = input('Что вы выбираете: ').strip()
+            if user_choice in event['choices']:
+                choice = event['choices'][user_choice]
+                print(choice['outcome'])
+                if 'attributes' in choice:
+                    for attr, value in choice['attributes'].items():
+                        characteristics[attr] += value
+                        print(f'{attr}: {characteristics[attr]}')
+                if 'inventory' in choice:
+                    inventory.extend(choice['inventory'])
+                    print(f'Инвентарь: {inventory}')
+                break
+            else:
+                print('Неверный выбор, попробуйте еще раз.')
+
+
+# Вызов функции выполнения квеста
+perform_quest()
+
+
+def choose_appearance():
+    print('выберите внешность вашего перса.')
+    appearance_name = input('выбирете имя:')
+    appearance_hair = input('выбирете цвет волос:')
+    appearance_leather = input('выберите цвет кожи:')
+    appearance_eyes = input('выберите цвет глаз: ')
+    appearance_height = input('выберите рост: ')
+
+    choice = f'''у вашего перса вот такое имя:{appearance_name}
+у вашего персонажа вот такой:{appearance_hair} цвет волос
+Цвет кожи вашего персонажа: {appearance_leather}.
+
+у него {appearance_eyes} цвет глаз
+у вас такой {appearance_height} рост'''
+
+    print(choice)
+
+
+def go_bar():
+    go_is_bar = input('выхотите пойти в бар')
+    if go_is_bar == no:
+        print('персонаж не пошёл в бар')
+        print('мы остались дома')
+        print('мы пошли к парню с заданиями')
+
+elif go_is_bar == yes:
+        print('персонаж пошёл в бар')
+        print('персонаж пришёл в бар')
+        print('персонаж увидел красивое оружие и крутое. КАК ПОСТУПИТЬ')
+        print('вы хотите украсть оружее?(введите число от 1 до 3)')
+        steall = input('''что выберете как лучшее поступить
+                 1)Украсть и подраться нагло.
+                 2)Тихонько незаметно украсть.
+                 3)Смириться, выпить и уйти.''')
+        if steall == '1':
+            print('Достижение: Наглый вор.')
+            inventory.append('крутой револьвер')
+        elif steall == '2':
+            print('Достижение: Тихоня, ВОТ КРЫСА.')
+            inventory.append('крутой револьвер')
+        elif steall == '3':
+            print('Достижение: Слабак :(')
+        else:
+            print('нет не верно другой выбор должен быть')
+
+
+def get_quest():
+    print('Игрок идет к парню, который выдает задания.')
+    weapon = input('У вас есть оружие? (да/нет):')
+    if weapon == 'да':
+        print('у вас уже есть оружее ещё лучшее оружее чем бы вам дали.')
+    elif weapon == 'нет':
+        print('Вам выдано оружее хуже чем было в баре.')
+        inventory.append('хуже револьвер')
+    print('Игрок выполняет задание и возвращается обратно.')
+    print('Персонаж получает новое задание, и игра завершается сообщением "КОНЕЦ :)".')
+
+
+choose_appearance()
+go_bar()
+get_quest()
+print(f'у вас в инвентаре вот такие вещи {inventory}')
