@@ -1,0 +1,62 @@
+import tkinter as tk
+from tkinter import messagebox
+
+# Глобальные переменные
+massiv1 = ['bear', 'boar', 'bird', 'tiger', 'mouse', 'lion']
+massiv2 = ['медведь', 'кабан', 'птица', 'тигр', 'мышь', 'лев']
+
+# Функция для проверки знаний
+def check_knowledge():
+    counter_correct = 0
+    counter_incorrect = 0
+
+    for i in range(len(massiv1)):
+        en = massiv1[i]
+        ru = massiv2[i]
+
+        for attempt in range(3):
+            answer = input(f'Как будет "{ru}" по-английски? (попытка {attempt + 1}/3) ')
+
+            if answer.lower() == en:
+                print('Правильно! Молодцы! Пойдем дальше.')
+                counter_correct += 1
+                break
+            else:
+                print('Неправильно. Попробуйте еще раз.')
+        else:
+            print(f'Неправильно. Правильный ответ был "{en}".')
+            counter_incorrect += 1
+
+    # Выводим результаты
+    messagebox.showinfo("Результаты", f'Правильных ответов: {counter_correct}\nНеправильных ответов: {counter_incorrect}')
+
+    # Оценка результатов
+    if counter_correct == len(massiv1):
+        messagebox.showinfo("Оценка", 'Вы хорошо запомнили слова!')
+    elif counter_correct >= len(massiv1) / 2:
+        messagebox.showinfo("Оценка", 'Вы средне запомнили слова!')
+    else:
+        messagebox.showinfo("Оценка", 'Вы не хорошо запомнили слова.')
+
+# Создаем главное окно
+root = tk.Tk()
+root.title("Изучение английского")
+
+# Создаем метку и поле ввода для имени
+name_label = tk.Label(root, text="Введите своё имя:")
+name_label.pack()
+name_entry = tk.Entry(root)
+name_entry.pack()
+
+# Функция для начала изучения
+def start_learning():
+    name = name_entry.get()
+    messagebox.showinfo("Добро пожаловать", f'Здравствуйте {name}, давайте с вами {name} изучим английский.')
+    check_knowledge()
+
+# Создаем кнопку для начала изучения
+start_button = tk.Button(root, text="Начать изучение", command=start_learning)
+start_button.pack()
+
+# Запускаем главный цикл событий
+root.mainloop()
