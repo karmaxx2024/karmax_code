@@ -1,0 +1,49 @@
+name = input('введите своё имя: ')
+print(f'Здравствуйте, {name}')
+age = int(input('введите свой возрост: '))
+
+
+counter_correct = 0
+counter_uncorrect = 0
+
+
+
+if age < 7:
+    print('вам нельзя играть в эту игру вы ещё не достачно умные простите!')
+else:
+    answer1 = str(input('1)вопрос: Выберите слово, которое не обозначает животное. Варианты ответов: elephant, table, mouse, tiger\n'))
+    if answer1 == 'table':
+        print('правельно')
+        counter_correct += 1
+    else:
+        print(' не правельно')
+        counter_uncorrect += 1
+
+    answer2 = str(input('2)вопрос: Как правильно пишется «Великобритания»? Варианты ответов: Great Britan, Greet Bretain, Great Britain.\n'))
+    if answer2 == 'Great Britain':
+        print('правельно')
+        counter_correct += 1
+    else:
+        print(' не правельно')
+        counter_uncorrect += 1
+
+    answer3 = str(input('3)вопрос: «Между» по-английски — это. Варианты ответов: beyond, behind, beside, between.\n'))
+    if answer3 == 'between':
+        print('правельно')
+        counter_correct += 1
+    else:
+        print(' не правельно')
+        counter_uncorrect += 1
+
+    answer4 = str(input('4)вопрос: ««Их, свой, принадлежащий им» по-английски — это. Варианты ответов: they, them, their.\n'))
+    if answer4 == 'their':
+        print('правельно')
+        counter_correct += 1
+    else:
+        print('не правельно')
+        counter_uncorrect += 1
+    answer5 = str(input('5)вопрос: Правило гласит, что названия стран, континентов, штатов, провинций (не упоминая исключения) пишутся. Варианты ответов: без артикля, с артиклем. \n'))
+    if answer5 == 'без артикля':
+        print('правельно')
+        counter_correct += 1
+    else:
