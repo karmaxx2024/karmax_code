@@ -1,0 +1,61 @@
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+# Пример использования
+rect = Rectangle(5, 10)
+print(f"Площадь: {rect.area()}")
+print(f"Периметр: {rect.perimeter()}")
+
+
+#Класс Rectangle
+#python
+#Copy
+#class Rectangle:
+    #def __init__(self, width, height):
+        #self.width = width
+        #self.height = height
+
+    #def area(self):
+        #return self.width * self.height
+
+    #def perimeter(self):
+        #return 2 * (self.width + self.height)
+#1. Конструктор __init__
+#python
+#Copy
+#def __init__(self, width, height):
+    #self.width = width
+    #self.height = height
+#Конструктор — это специальный метод, который вызывается при создании нового объекта класса. В данном случае, конструктор принимает два параметра: width (ширина) и height (высота).
+
+#self.width и self.height — это атрибуты объекта класса Rectangle. Они хранят значения ширины и высоты прямоугольника.
+
+#2. Метод area
+#python
+#Copy
+#def area(self):
+    #return self.width * self.height
+#Метод area вычисляет площадь прямоугольника.
+
+#Площадь прямоугольника равна произведению его ширины на высоту.
+
+#Метод возвращает результат вычисления.
+
+#3. Метод perimeter
+#python
+#Copy
+#def perimeter(self):
+    #return 2 * (self.width + self.height)
+#Метод perimeter вычисляет периметр прямоугольника.
+
+#Периметр прямоугольника равен удвоенной сумме его ширины и высоты.
+
+#Метод возвращает результат вычисления.
