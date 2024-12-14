@@ -1,0 +1,13 @@
+name = input('введите своё имя: ')
+print(f'здравствуйте {name}')
+print(f'сейчас вам {name} выводится квадрат из звёздочек')
+Enter = (input('нажмите Enter чтобы вывелся квадрат'))
+a = 1
+b = 4
+c = 1
+for i in range(a):
+    print('******')
+for j in range(b):
+    print('*    *')
+for k in range(c):
+    print('******')
