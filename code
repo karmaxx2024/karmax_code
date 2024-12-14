@@ -1,0 +1,8 @@
+a = input('Введите значение: ')
+
+if a.isdigit():
+    print('int')
+elif a.replace('.', '', 1).isdigit():
+    print('float')
+else:
+    print('str')
