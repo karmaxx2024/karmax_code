@@ -1,0 +1,102 @@
+import pygame
+import sys
+import random
+
+# Инициализация Pygame
+pygame.init()
+
+# Настройка экрана
+screen_width = 800
+screen_height = 400
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Простой раннер")
+
+# Цвета
+white = (255, 255, 255)
+black = (0, 0, 0)
+red = (255, 0, 0)
+green = (0, 255, 0)
+
+# Настройка частоты обновления экрана
+clock = pygame.time.Clock()
+
+# Персонаж (игрок)
+player_width = 40
+player_height = 60
+player_x = 50
+player_y = screen_height - player_height - 50
+player_y_velocity = 0
+gravity = 1
+jump_power = -15
+is_jumping = False
+
+# Препятствие (камень)
+obstacle_width = 50
+obstacle_height = 50
+obstacle_x = screen_width
+obstacle_y = screen_height - obstacle_height - 50
+obstacle_speed = 5
+
+# Счет
+score = 0
+font = pygame.font.Font(None, 36)
+
+# Основной цикл игры
+running = True
+while running:
+    # Обработка событий
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Управление персонажем
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_SPACE] and not is_jumping:
+        player_y_velocity = jump_power
+        is_jumping = True
+
+    # Гравитация
+    player_y_velocity += gravity
+    player_y += player_y_velocity
+
+    # Проверка, если персонаж приземлился
+    if player_y >= screen_height - player_height - 50:
+        player_y = screen_height - player_height - 50
+        is_jumping = False
+
+    # Движение препятствия
+    obstacle_x -= obstacle_speed
+    if obstacle_x + obstacle_width < 0:
+        obstacle_x = screen_width
+        score += 1
+
+    # Проверка столкновения
+    if (player_x + player_width > obstacle_x and
+        player_x < obstacle_x + obstacle_width and
+        player_y + player_height > obstacle_y):
+        running = False
+
+    # Очистка экрана
+    screen.fill(white)
+
+    # Рисование персонажа
+    pygame.draw.rect(screen, green, (player_x, player_y, player_width, player_height))
+
+    # Рисование препятствия
+    pygame.draw.rect(screen, red, (obstacle_x, obstacle_y, obstacle_width, obstacle_height))
+
+    # Рисование земли
+    pygame.draw.rect(screen, black, (0, screen_height - 50, screen_width, 50))
+
+    # Отображение счета
+    score_text = font.render(f"Score: {score}", True, black)
+    screen.blit(score_text, (10, 10))
+
+    # Обновление экрана
+    pygame.display.flip()
+
+    # Управление частотой обновления экрана
+    clock.tick(30)
+# Завершение Pygame
+pygame.quit()
+sys.exit()
